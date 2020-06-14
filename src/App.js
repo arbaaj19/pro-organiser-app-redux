@@ -1,26 +1,34 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faList, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+
 import './App.css';
 
+import Boards from './../src/pages/Boards/Boards';
+import CreateBoard from './../src/pages/CreateBoard/CreateBoard';
+import Layout from './../src/pages/Layout/Layout';
+import Board from '../src/pages/Board/Board';
+
+library.add(faList, faTrashAlt);
+
 function App() {
+  let routes = (
+    <Switch>
+      <Route path="/createboard" component={CreateBoard}></Route>
+      <Route path="/board/:boardId" component={Board}></Route>
+      <Route path="/" component={Boards}></Route>
+      <Redirect to="/" />
+    </Switch>
+  );
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Layout>
+        {routes}
+      </Layout>
     </div>
   );
 }
 
-export default App;
+export default withRouter(App);
